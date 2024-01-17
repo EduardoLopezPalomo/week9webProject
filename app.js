@@ -43,8 +43,14 @@ userSchema.pre('save', function(next) {
   });
 });
 
+app.get("/", (req,res)=>{
+  res.send("hola");
+});
 app.get('/register.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'login.html'));
 });
 
 const User = mongoose.model('User', userSchema);
