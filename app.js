@@ -43,11 +43,11 @@ userSchema.pre('save', function(next) {
   });
 });
 
-app.get("/", (req,res)=>{
-  res.send("hola");
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 app.get('/register.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'register.html'));
 });
 app.get('/login.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'login.html'));
