@@ -1,5 +1,3 @@
-const jwt_decode = require('jwt-decode');
-
 document.addEventListener('DOMContentLoaded', () => {
     const userInfoElement = document.getElementById('userInfo');
     const authButtonsElement = document.getElementById('authButtons');
