@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateUI = () => {
         if (isAuthenticated()) {
             const token = localStorage.getItem('auth_token');
-            const decodedToken = window.jwt_decode(token);
 
-            userInfoElement.textContent = `Welcome, ${decodedToken.email}`;
+            userInfoElement.textContent = `Welcome, ${token.email}`;
             authButtonsElement.innerHTML = '';
             logoutButton.style.display = 'block';
         } else {
