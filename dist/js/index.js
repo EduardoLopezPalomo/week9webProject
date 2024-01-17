@@ -33,5 +33,4 @@ document.addEventListener('DOMContentLoaded', () => {
     logoutButton.addEventListener('click', logout);
 
     updateUI();
-
 });
