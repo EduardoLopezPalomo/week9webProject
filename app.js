@@ -17,6 +17,7 @@ mongoose.connect(mongoDB);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 app.use(express.json());
+app.use(express.static('dist'));
 app.use(passport.initialize());
 
 const userSchema = new mongoose.Schema({
@@ -40,6 +41,10 @@ userSchema.pre('save', function(next) {
     user.password = hash;
     next();
   });
+});
+
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 const User = mongoose.model('User', userSchema);
