@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateUI = () => {
         if (isAuthenticated()) {
             const token = localStorage.getItem('auth_token');
+            const decodedToken = jwt_decode(token);
 
             userInfoElement.textContent = `Welcome, ${decodedToken.email}`;
             authButtonsElement.innerHTML = '';
