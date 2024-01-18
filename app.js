@@ -123,6 +123,8 @@ app.post('/api/user/login', async (req, res) => {
     }
   }));
 
+var userIdAux;
+
 app.get('/api/private', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.json({ email: req.user.email });
 });
@@ -136,7 +138,7 @@ app.post('/api/todos', passport.authenticate('jwt', { session: false }), [body('
     try {
         const { items } = req.body;
         const userId = req.user._id;
-  
+        userIdAux = userId;
         let existingTodo = await Todo.findOne({ user: userId });
   
         if (!existingTodo) {
@@ -152,6 +154,21 @@ app.post('/api/todos', passport.authenticate('jwt', { session: false }), [body('
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+app.get('/api/todos', async (req, res) => {
+  try {
+      const userId = userIdAux;
+      const userTodo = await Todo.findOne({ user: userId });
+
+      if (userTodo) {
+          res.status(200).json({ items: userTodo.items });
+      } else {
+          res.status(200).json({ items: [] });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
