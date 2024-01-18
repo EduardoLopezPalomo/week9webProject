@@ -60,7 +60,7 @@ app.post('/api/user/register',[body('email').isEmail(), body('password').isStron
     
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ error: 'Invalid registration data', details: errors.array() });
+        return res.status(400).json({ error: 'Password is not strong enough', details: errors.array() });
     }
   
     try {
@@ -68,7 +68,7 @@ app.post('/api/user/register',[body('email').isEmail(), body('password').isStron
   
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-          return res.status(403).json({ error: 'Email is already in use' });
+          return res.status(403).json({ error: 'Email already in use' });
         }
   
         const newUser = new User({ email, password });
@@ -88,12 +88,12 @@ app.post('/api/user/login', async (req, res) => {
   
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        return res.status(401).json({ error: '	Invalid credentials' });
       }
   
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        return res.status(401).json({ error: '	Invalid credentials' });
       }
   
       const token = jwt.sign({ email: user.email }, process.env.SECRET, { expiresIn: '1h' });
