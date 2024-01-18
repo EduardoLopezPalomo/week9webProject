@@ -4,6 +4,20 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
+    const handleAuthError = (error) => {
+        const errorMessageElement = document.getElementById('errorMessage');
+
+        if (error.message === 'Email already in use') {
+            errorMessageElement.textContent = 'Email is already in use';
+        } else if (error.message === 'Invalid credentials') {
+            errorMessageElement.textContent = 'Invalid email or password';
+        } else {
+            errorMessageElement.textContent = 'An error occurred during authentication';
+        }
+
+        errorMessageElement.style.display = 'block';
+    };
+
     fetch('/api/user/login', {
         method: 'POST',
         headers: {
@@ -20,5 +34,5 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             console.error('Login failed');
         }
     })
-    .catch(error => console.error('Error during login:', error));
+    .catch((error) => handleAuthError(error.response.data));
 });
